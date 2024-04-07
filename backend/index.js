@@ -21,8 +21,11 @@
     app.post('/payment',(req,res)=>{
         const {product , token}= req.body
 
-        const ideompotencyKey = uuid()
-
+        const ideompotencyKey = uuidv4()
+        console.log('object received from frontend---- ',req.body.product);
+        console.log('ffff---',product);
+        console.log('token--',token);
+        
         return stripe.customers.create({
             email:token.email,
             source:token.id
@@ -40,6 +43,7 @@
                 }
             },{ideompotencyKey})
         }).then(result =>{
+            console.log('result-->',result);
             res.status(200).json(result)
         }).catch(err=>{
             console.log(err.message);
